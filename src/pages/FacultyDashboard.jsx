@@ -384,8 +384,8 @@ const StudentList = () => {
   React.useEffect(() => {
     const fetchClass = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const res = await fetch('http://127.0.0.1:5000/api/faculty/class_overview', {
+            const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000/api').replace(/\/$/, '');
+            const res = await fetch(`${API_BASE}/faculty/class_overview`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {

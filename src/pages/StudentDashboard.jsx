@@ -4,6 +4,7 @@ import { Upload, CheckCircle2, Clock, FileText, Search, BookOpen, AlertCircle } 
 import Modal from '../components/Modal';
 
 const StudentDashboard = ({ activePage }) => {
+  const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000/api').replace(/\/$/, '');
   const [profile, setProfile] = useState({ name: 'Loading...', studentId: '...' });
   const [courses, setCourses] = useState([]);
   const [dragging, setDragging] = useState(false);
@@ -20,11 +21,11 @@ const StudentDashboard = ({ activePage }) => {
         const headers = { 'Authorization': `Bearer ${token}` };
         
         // Profile
-        const profRes = await fetch('http://127.0.0.1:5000/api/student/profile', { headers });
+        const profRes = await fetch(`${API_BASE}/student/profile`, { headers });
         if (profRes.ok) setProfile(await profRes.json());
 
         // Courses
-        const courseRes = await fetch('http://127.0.0.1:5000/api/student/courses', { headers });
+        const courseRes = await fetch(`${API_BASE}/student/courses`, { headers });
         if (courseRes.ok) {
             const data = await courseRes.json();
             setCourses(data);
@@ -32,7 +33,7 @@ const StudentDashboard = ({ activePage }) => {
         }
 
         // History
-        const histRes = await fetch('http://127.0.0.1:5000/api/student/history', { headers });
+        const histRes = await fetch(`${API_BASE}/student/history`, { headers });
         if (histRes.ok) setSubmissions(await histRes.json());
       } catch (err) {
         console.error("Failed to fetch student data", err);
@@ -57,7 +58,7 @@ const StudentDashboard = ({ activePage }) => {
       const token = localStorage.getItem('token');
       // For now, mapping course text to assignment_id 1 just to simulate submission. 
       // In a real app we'd fetch actual assignment IDs.
-      const res = await fetch('http://127.0.0.1:5000/api/student/submit', {
+      const res = await fetch(`${API_BASE}/student/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

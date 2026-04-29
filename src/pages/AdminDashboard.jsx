@@ -11,6 +11,7 @@ import Settings from './admin/Settings';
 import Modal from '../components/Modal';
 
 const AdminDashboard = ({ activePage, setActivePage }) => {
+  const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000/api').replace(/\/$/, '');
   const [searchQuery, setSearchQuery] = useState('');
   const [showReportModal, setShowReportModal] = useState(false);
   const [showAllFacultyModal, setShowAllFacultyModal] = useState(false);
@@ -33,14 +34,14 @@ const AdminDashboard = ({ activePage, setActivePage }) => {
   // FETCH FROM FLASK ON LOAD
   useEffect(() => {
     const token = localStorage.getItem('token');
-    fetch('http://127.0.0.1:5000/api/admin/live-stats')
+    fetch(`${API_BASE}/admin/live-stats`)
       .then(res => res.json())
       .then(data => {
         if (!data.error) setLiveStats(data);
       })
       .catch(err => console.error("Failed to fetch live stats", err));
 
-    fetch('http://127.0.0.1:5000/api/admin/alerts', {
+    fetch(`${API_BASE}/admin/alerts`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -49,7 +50,7 @@ const AdminDashboard = ({ activePage, setActivePage }) => {
       })
       .catch(err => console.error("Failed to fetch alerts", err));
 
-    fetch('http://127.0.0.1:5000/api/admin/analytics/trends', {
+    fetch(`${API_BASE}/admin/analytics/trends`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -58,14 +59,14 @@ const AdminDashboard = ({ activePage, setActivePage }) => {
       })
       .catch(err => console.error("Failed to fetch trends", err));
 
-    fetch('http://127.0.0.1:5000/api/admin/analytics/radar', {
+    fetch(`${API_BASE}/admin/analytics/radar`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
       .then(data => setRadarStats(data))
       .catch(err => console.error("Failed to fetch radar stats", err));
 
-    fetch('http://127.0.0.1:5000/api/admin/users?role=faculty', {
+    fetch(`${API_BASE}/admin/users?role=faculty`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())

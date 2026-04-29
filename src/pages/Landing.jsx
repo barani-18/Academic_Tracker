@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Shield, BrainCircuit, Activity, ChevronRight, Lock, User, Key, Zap, Fingerprint, Database } from 'lucide-react';
 
 const Landing = ({ onLogin }) => {
+  const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000/api').replace(/\/$/, '');
   const [loginId, setLoginId] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ const Landing = ({ onLogin }) => {
     setError('');
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/auth/login', {
+      const response = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginId, password })
