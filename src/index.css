@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1A1A1A;
+  background-color: #F7FDF9;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.bg-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(124, 252, 0, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card {
+  @apply bg-[#F1F9F4]/80 backdrop-blur-md border border-white/50 rounded-2xl shadow-glass;
+}
+
+.hover-glow {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-neon-glow hover:border-[#7CFC00]/50;
+}
+
+.btn-3d {
+  @apply bg-primary text-black font-semibold rounded-xl pb-1 border-b-4 border-[#55aa00] active:border-b-0 active:translate-y-1 transition-all hover:shadow-btn-glow;
+}
+
+.animate-border-glow {
+  animation: border-glow 2s infinite ease-in-out;
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: #39FF14; box-shadow: 0 0 5px #39FF14; }
+  50% { border-color: #7CFC00; box-shadow: 0 0 20px #39FF14; }
+}
+
+.radar-chart .recharts-polar-grid-concentric-path {
+  stroke: #888888;
+}
+
+.radar-chart .recharts-polar-angle-axis-line {
+  stroke: #888888;
+}
